@@ -1,0 +1,39 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+
+using namespace std;
+int n, k;
+vector<int> result;
+
+
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    cin >> n >> k;
+    vector<int> numbers(n);
+    for (auto &it: numbers) cin >> it;
+
+    auto compare = [](pair<int,int> a, pair<int,int> b){
+        return a.second > b.second;
+    };
+
+    int counter = 0;
+    while (counter < n - k + 1) {
+        priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(compare)> temp(compare);
+        for (int i = counter; i < counter + k; i++) {
+            cout << "number is "<< numbers[i] << endl;
+            temp.push({numbers[i], numbers[i]});
+        }
+        cout << "_________________\n";
+        result.emplace_back(temp.top().second);
+        counter++;
+    }
+
+    for (int i: result) {
+        cout << i << " ";
+    }
+    return 0;
+}
